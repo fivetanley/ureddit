@@ -2,7 +2,6 @@
 
 class base {
   public $config;
-  public $mysql;
 
   function __autoload($class)
   {
@@ -12,7 +11,6 @@ class base {
   function __construct($config)
   {
     $this->config = $config;
-    $this->mysql = new mysql($config);
   }
 
   function error($arg, $log = false)

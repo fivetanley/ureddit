@@ -14,7 +14,7 @@ class mysql extends base
   function __construct($config)
   {
     $this->config = $config;
-    parent::__construct();
+    parent::__construct($config);
     $this->connect();
   }
 
@@ -22,12 +22,10 @@ class mysql extends base
   {
     if(is_array($thing))
       {
+	$esc = array();
 	foreach($thing as $key => &$value)
-	  {
-	    $key = $this->escape($key);
-	    $value = $this->escape($value);
-	  }
-	return $thing;
+	  $esc[$this->escape($key)] = $this->escape($value);
+	return $esc;
       }
     else
       return mysql_real_escape_string($thing);
@@ -38,9 +36,9 @@ class mysql extends base
     try
       {
 	$this->mh = new PDO(
-			    'mysql:host=' . $this->config->sqlmyHOST . ';dbname=' . $this->config->mysqlDB, 
-			    $this->config->mysqlUSER,
-			    $this->config->mysqlPASS
+			    'mysql:host=' . $this->config->mysql_host() . ';dbname=' . $this->config->mysql_db(), 
+			    $this->config->mysql_user(),
+			    $this->config->mysql_pass()
 			    );
       }
     catch (PDOException $e)
