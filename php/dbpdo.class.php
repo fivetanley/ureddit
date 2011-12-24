@@ -2,7 +2,7 @@
 
 require_once("base.class.php");
 
-class mysql extends base
+class dbpdo extends base
 {
   public $mh = NULL;
 
@@ -36,9 +36,9 @@ class mysql extends base
     try
       {
 	$this->mh = new PDO(
-			    'mysql:host=' . $this->config->mysql_host() . ';dbname=' . $this->config->mysql_db(), 
-			    $this->config->mysql_user(),
-			    $this->config->mysql_pass()
+			    $this->config->driver() . ':host=' . $this->config->host() . ';dbname=' . $this->config->db(), 
+			    $this->config->user(),
+			    $this->config->pass()
 			    );
       }
     catch (PDOException $e)
